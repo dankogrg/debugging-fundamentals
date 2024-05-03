@@ -1,11 +1,11 @@
 const handleDatabaseError = (res, error) => {
-    console.error('Database error:', error);
-    res.status(500).send('Internal Server Error.');
+    console.error("Database error:", error);
+    res.status(500).send("Internal Server Error.");
 };
 
 const getAllUsersFromDatabase = (connection, res) => {
     return new Promise((resolve, reject) => {
-        let query = 'SELECT * FROM player';
+        let query = "SELECT * FROM players";
 
         connection.all(query, (error, rows) => {
             if (error) {
@@ -20,27 +20,26 @@ const getAllUsersFromDatabase = (connection, res) => {
 
 const insertUserIntoDatabase = (connection, user, res) => {
     return new Promise((resolve, reject) => {
-        const { username, score, round, level, os, browser, ip_address } = user;
+        const { username, score, round, level, browser, os, ip_address } = user;
 
         const query = `
             INSERT INTO players (username, score, round, level, browser, operational_system, ip_address)
             VALUES (?, ?, ?, ?, ?, ?, ?)
         `;
 
-        const values = [username, score, round, level, os, browser, ip_address];
+        const values = [username, score, round, level, browser, os, ip_address];
 
         connection.run(query, values, (error) => {
             if (error) {
                 handleDatabaseError(res, error);
                 reject(error);
             } else {
-                console.log('Registration entered successfully:', this.lastID);
+                console.log("Registration entered successfully:", this.lastID);
                 resolve(this.lastID);
             }
         });
     });
 };
-
 
 const getRanking = (connection, rankType, limit, res) => {
     return new Promise((resolve, reject) => {
@@ -53,11 +52,13 @@ const getRanking = (connection, rankType, limit, res) => {
                 dateFormat = "%Y-%m-%d";
                 break;
             case "WEEKLY":
-                timeFrameCondition = "strftime('%Y-%W', date) = strftime('%Y-%W', 'now')";
+                timeFrameCondition =
+                    "strftime('%Y-%W', date) = strftime('%Y-%W', 'now')";
                 dateFormat = "%Y-%W";
                 break;
             case "MONTHLY":
-                timeFrameCondition = "strftime('%Y-%m', date) = strftime('%Y-%m', 'now')";
+                timeFrameCondition =
+                    "strftime('%Y-%m', date) = strftime('%Y-%m', 'now')";
                 dateFormat = "%Y-%m";
                 break;
             default:
@@ -96,10 +97,12 @@ const getRecordOfPlayer = (connection, username, period, res) => {
                     timeFrameCondition = "date(date) = date('now')";
                     break;
                 case "WEEKLY":
-                    timeFrameCondition = "strftime('%Y-%W', date) = strftime('%Y-%W', 'now')";
+                    timeFrameCondition =
+                        "strftime('%Y-%W', date) = strftime('%Y-%W', 'now')";
                     break;
                 case "MONTHLY":
-                    timeFrameCondition = "strftime('%Y-%m', date) = strftime('%Y-%m', 'now')";
+                    timeFrameCondition =
+                        "strftime('%Y-%m', date) = strftime('%Y-%m', 'now')";
                     break;
                 default:
                     res.status(400).json({ msg: "Invalid period." });
@@ -134,5 +137,5 @@ module.exports = {
     getAllUsersFromDatabase,
     insertUserIntoDatabase,
     getRanking,
-    getRecordOfPlayer
+    getRecordOfPlayer,
 };

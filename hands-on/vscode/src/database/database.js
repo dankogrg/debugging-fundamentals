@@ -1,11 +1,11 @@
-const sqlite3 = require('sqlite3');
-const path = require('path');
+const sqlite3 = require("sqlite3");
+const path = require("path");
 
-const dbPath = path.resolve(__dirname, 'math-game.db');
+const dbPath = path.resolve(__dirname, "math-game.db");
 const connection = new sqlite3.Database(dbPath);
 
 connection.serialize(() => {
-    connection.runn(`CREATE TABLE IF NOT EXISTS players (
+    connection.run(`CREATE TABLE IF NOT EXISTS players (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         username TEXT,
         score INTEGER,
