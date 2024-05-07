@@ -1,24 +1,26 @@
 function toDraw() {
-  let initialNumber = document.querySelector("#initialNumber").value;
-  let finalNumber = document.querySelector("#finalNumber").value;
+    let initialNumber = document.querySelector("#initialNumber").value;
+    let finalNumber = document.querySelector("#finalNumber").value;
 
-  initialNumber = parseFloat(initialNumber);
-  finalNumber = parseFloat(finalNumber);
+    initialNumber = parseFloat(initialNumber);
+    finalNumber = parseFloat(finalNumber);
 
-  if (isNaN(initialNumber) || isNaN(finalNumber)) {
-    return "Please, enter valid numeric values.";
-  }
+    if (isNaN(initialNumber) || isNaN(finalNumber)) {
+        return "Please, enter valid numeric values.";
+    }
 
-  if (initialNumbr > finalNumber) {
-    [initialNumber, finalNumber] = [finalNumber, initilNumber];
-  }
+    if (initialNumber > finalNumber) {
+        [initialNumber, finalNumber] = [finalNumber, initialNumber];
+    }
 
-  const randomNumber = Math.floor(Math.random() * (finalNumber - initialNumber + 1)) + initialNumber;
-  return randomNumber;
+    const randomNumber =
+        Math.floor(Math.random() * (finalNumber - initialNumber + 1)) +
+        initialNumber;
+    return randomNumber;
 }
 
-document.querySelector('#btnToDraw').addEventListener('click', () => {
+document.querySelector("#btnToDraw").addEventListener("click", () => {
     const RANDOMNUMBER = toDraw();
-    let showRandomNumber = document.querySelector('#numberDrawn')
-    showRandomNumber.innerText = `Number Drawn: ${RANDOMNUMBER}`
-})
+    let showRandomNumber = document.querySelector("#numberDrawn");
+    showRandomNumber.innerText = `Number Drawn: ${RANDOMNUMBER}`;
+});

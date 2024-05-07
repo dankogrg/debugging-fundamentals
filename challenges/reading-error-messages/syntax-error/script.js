@@ -1,29 +1,24 @@
-
-const pathImgs = [
-    './img/img1.jpg',
-    './img/img2.jpg',
-    './img/img3.jpg';
-];
+const pathImgs = ["./img/img1.jpg", "./img/img2.jpg", "./img/img3.jpg"];
 
 function showImage(index) {
-    const containerImage = document.getElementById('imageContainer');
-    
+    const containerImage = document.getElementById("imageContainer");
+
     if (index < pathImgs.length) {
-      const image = new Image();
-      image.src = pathImgs[index];
-      image.style.width = '300px'; 
-      
-      containerImage.innerHTML = ''; 
+        const image = new Image();
+        image.src = pathImgs[index];
+        image.style.width = "300px";
 
-      containerImage.appendChild(image);
+        containerImage.innerHTML = "";
 
-      setTimeout(() => {
-        showImage(index + 1);
-      }, 3000);
+        containerImage.appendChild(image);
+
+        setTimeout(() => {
+            showImage(index + 1);
+        }, 3000);
     } else {
-      setTimeout(() => {
-        showImage(0);
-      }, 10 x 1000);
+        setTimeout(() => {
+            showImage(0);
+        }, 10 * 1000);
     }
 }
 

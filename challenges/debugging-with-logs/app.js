@@ -5,7 +5,7 @@ function calculateNextBusinessDays(startDate) {
         const date = new Date(startDate);
         date.setDate(startDate.getDate() + counter);
         if (date.getDay() !== 0 && date.getDay() !== 6) {
-            businessDays.push(date.toLocaleDateString);
+            businessDays.push(date.toLocaleDateString());
         }
         counter++;
     }
@@ -13,34 +13,50 @@ function calculateNextBusinessDays(startDate) {
 }
 
 function generateSchedule() {
-    const startDate = new Date(document.getElementById('date').value);
-    const scheduleDiv = document.getElementById('schedule');
-    let scheduleHTML = '';
-    if (isNaN(startDate.getTime())) {
-        const businessDays = calculateNextBusinessDays(startDate);
+    const startDate = new Date(document.getElementById("date").value);
+    const scheduleDiv = document.getElementById("schedule");
+    let scheduleHTML = "";
 
-        scheduleHTML += '<h2>Available Time Slots</h2>';
-        scheduleHTML += '<table border="1"><tr';
+    if (isNaN(startDate.getTime())) {
+        scheduleHTML = "<p>Invalid date. Please enter a valid date.</p>";
+    } else {
+        const businessDays = calculateNextBusinessDays(startDate);
+        console.log(businessDays);
+
+        scheduleHTML += "<h2>Available Time Slots</h2>";
+        scheduleHTML += '<table border="1"><tr>';
 
         for (let day of businessDays) {
+            console.log(day);
             scheduleHTML += `<th>${day}</th>`;
         }
-        scheduleHTML += '</tr>';
+        scheduleHTML += "</tr>";
 
-        const timeSlots = ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00'];
+        const timeSlots = [
+            "08:00",
+            "09:00",
+            "10:00",
+            "11:00",
+            "12:00",
+            "13:00",
+            "14:00",
+            "15:00",
+            "16:00",
+            "17:00",
+        ];
         for (let timeSlot of timeSlots) {
-            scheduleHTML += '<tr>';
+            scheduleHTML += "<tr>";
             for (let day of businessDays) {
-                scheduleHTML += `td>${timeSlot}</td>`;
+                scheduleHTML += `<td>${timeSlot}</td>`;
             }
-            scheduleHTML += '</tr>';
+            scheduleHTML += "</tr>";
         }
 
-        scheduleHTML += '</table>';
-    } else {
-        scheduleHTML = '<p>Invalid date. Please enter a valid date.</p>';
+        scheduleHTML += "</table>";
     }
 
     scheduleDiv.innerHTML = scheduleHTML;
 }
-document.querySelector('#btnGeneratte').addEventListener('click', generateSchedule());
+document
+    .querySelector("#btnGenerate")
+    .addEventListener("click", generateSchedule);

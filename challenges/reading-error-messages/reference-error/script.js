@@ -5,7 +5,7 @@ function addItem() {
         let li = document.createElement("li");
         li.appendChild(document.createTextNode(newItem));
 
-        document.getElementById("list").appendChild(ll);
+        document.getElementById("list").appendChild(li);
 
         document.getElementById("newItem").value = "";
     } else {
@@ -13,6 +13,4 @@ function addItem() {
     }
 }
 
-const addNewItem = addItem();
-
-document.getElementById('btnAddItem').addEventListener('click', addNewltem);
+document.getElementById("btnAddItem").addEventListener("click", addItem);

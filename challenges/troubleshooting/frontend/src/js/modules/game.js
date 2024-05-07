@@ -7,7 +7,6 @@ import ManipulationElements from "./manipuleElements.js";
 import sounds from "./sounds.js";
 
 class Game {
-
     constructor() {
         this.operations = new Operations(this);
         this.checks = new Checks(this);
@@ -19,14 +18,17 @@ class Game {
             if (e.key === "Enter") {
                 sharedVariables.btnSendUserResponse.click();
             }
-        })
-        sharedVariables.btnSendUserRespons.addEventListener("click", () => {
-            const checkField = checkFields.checkInputResponse(sharedVariables.inputUserResponse);
+        });
+        sharedVariables.btnSendUserResponse.addEventListener("click", () => {
+            const checkField = checkFields.checkInputResponse(
+                sharedVariables.inputUserResponse
+            );
             if (checkField) {
-                sharedVariables.resultEnteredByUser = sharedVariables.inputUserResponse.value;
+                sharedVariables.resultEnteredByUser =
+                    sharedVariables.inputUserResponse.value;
                 this.checks.checkResult();
             }
-        })
+        });
     }
 
     startGame() {
@@ -55,20 +57,27 @@ class Game {
     decreaseLife() {
         try {
             sharedVariables.lives -= 1;
-    
+
             if (sharedVariables.lives > 1) {
-                this.manipulationElements.manipulateHearts(`heart${sharedVariables.lives + 1}`);
+                this.manipulationElements.manipulateHearts(
+                    `heart${sharedVariables.lives + 1}`
+                );
                 this.startGame();
             } else if (sharedVariables.lives == 1) {
-                this.manipulationElements.manipulateHearts(`heart${sharedVariables.lives + 1}`);
+                this.manipulationElements.manipulateHearts(
+                    `heart${sharedVariables.lives + 1}`
+                );
                 this.startGame();
             } else if (sharedVariables.lives == 0) {
-                sounds.soundPlay('../../frontend/assets/sounds/soundFinishedGame.mp3');
-                this.manipulationElements.manipulationResultsFinished(sharedVariables.points);
+                sounds.soundPlay(
+                    "../../frontend/assets/sounds/soundFinishedGame.mp3"
+                );
+                this.manipulationElements.manipulationResultsFinished(
+                    sharedVariables.points
+                );
             }
         } catch (error) {
             console.error(`Error when decreasing lives: ${error}`);
-            
         }
     }
 
@@ -76,41 +85,46 @@ class Game {
         try {
             const plevel = document.querySelector("#levelQuestions");
             const pPoints = document.querySelector("#pointsQuestions");
-            
+
             sharedVariables.points += 5;
-            
+
             pPoints.innerHTML = `Points: ${sharedVariables.points}`;
-            pPoints.style.color = '#fff';
-            sharedVariables.questionField.style.color = '#38c958';
-            
+            pPoints.style.color = "#fff";
+            sharedVariables.questionField.style.color = "#38c958";
+
             setTimeout(() => {
-                pPoints.style.color = '#383939';
-                sharedVariables.questionField.style.color = '#FF0000';
+                pPoints.style.color = "#383939";
+                sharedVariables.questionField.style.color = "#FF0000";
             }, 250);
-        
+
             if (sharedVariables.points % 20 == 0) {
                 sharedVariables.maxNumber += 10;
                 sharedVariables.maxNumberMultiplication += 5;
                 sharedVariables.levels++;
-        
+
                 plevel.innerHTML = `Level: ${sharedVariables.levels}`;
-                plevel.style.color = '#fff';
-        
+                plevel.style.color = "#fff";
+
                 setTimeout(() => {
-                    plevel.style.color = '#383939';
+                    plevel.style.color = "#383939";
                 }, 300);
-        
+
                 if (sharedVariables.levels <= 2) {
-                    sharedVariables.manipulateLevel = sharedVariables.matchLevel[sharedVariables.levels + 1];
+                    sharedVariables.manipulateLevel =
+                        sharedVariables.matchLevel[sharedVariables.levels + 1];
                 }
             }
-        
+
             if (sharedVariables.points % 50 == 0 && sharedVariables.lives < 3) {
                 sharedVariables.lives += 1;
-                this.manipulationElements.manipulateHearts(`heart${sharedVariables.lives}`);
+                this.manipulationElements.manipulateHearts(
+                    `heart${sharedVariables.lives}`
+                );
             }
         } catch (error) {
-            console.error(`Error when manipulating user points, level and lives: ${error}`);
+            console.error(
+                `Error when manipulating user points, level and lives: ${error}`
+            );
         }
     }
 
@@ -131,9 +145,11 @@ class Game {
                     sharedVariables.result = sharedVariables.resultEquation;
                     break;
             }
-            return equation;            
+            return equation;
         } catch (error) {
-            console.error(`Error when manipulating user points, level and lives: ${error}`);
+            console.error(
+                `Error when manipulating user points, level and lives: ${error}`
+            );
         }
     }
 
@@ -141,7 +157,7 @@ class Game {
         try {
             const plevel = document.querySelector("#levelQuestions");
             const pPoints = document.querySelector("#pointsQuestions");
-            
+
             plevel.innerHTML = `Level: 0`;
             pPoints.innerHTML = `Points: 0`;
             sharedVariables.lives = 3;
@@ -159,14 +175,13 @@ class Game {
 
     resetGame() {
         try {
-            sharedVariables.divModalResults.style.display = 'none';
-            sharedVariables.divContainerQuestions.style.display = 'flex';
+            sharedVariables.divModalResults.style.display = "none";
+            sharedVariables.divContainerQuestions.style.display = "flex";
             this.resetGameData();
             this.startGame();
             sharedVariables.inputUserResponse.focus();
         } catch (error) {
             console.error(`Error when restarting game: ${error}`);
-            
         }
     }
 }
